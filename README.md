@@ -1,12 +1,13 @@
 # engineering-thesis
 ## self-development application for planning and controlling the achievement of goals
-### my engineering thesis project for task tracking, note taking and mood control
-!App screenshot [(screenshot.PNG)]
-## I uploaded:
+## It's my engineering thesis project for task tracking, note taking and mood control.
+![App screenshot](screenshot.png)
+## You can see here:
+* project files with the app code (SelfDevelopmentApplication directory)
 * the original PDF of my thesis (in Polish)
-* English summary (PDF presentation)
-* project files (in SelfDevelopmentApplication directory)
-### you can run the app by running SelfDevelopmentApplication.exe file
+* my summary (PDF presentation in English)
+* my conclusions (in English)
+### You can run the app by running SelfDevelopmentApplication.exe file (SelfDevelopmentApplication directory).
 ## Technologies:
 * .NET 5
 * WPF (C#, XAML)
