@@ -1,7 +1,7 @@
 # engineering-thesis
 ## self-development application for planning and controlling the achievement of goals
 ## It's my engineering thesis project for task tracking, note taking and mood control.
-![App screenshot](screenshot.png)
+![App screenshot](screenshot.PNG)
 ## You can see here:
 * project files with the app code (SelfDevelopmentApplication directory)
 * the original PDF of my thesis (in Polish)
