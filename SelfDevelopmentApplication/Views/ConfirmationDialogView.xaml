@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="SelfDevelopmentApplication.Views.ConfirmationDialogView"
+             Name="DefaultConfirmationDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             Height="210" Width="300">
+    <Border CornerRadius="15" 
+            Background="#313e4e"
+            BorderBrush="Black"
+            BorderThickness="1"
+            Padding="20,10,20,10">
+
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+            <TextBlock Text="{Binding Tag, ElementName=DefaultConfirmationDialogView}"
+                       TextWrapping="Wrap"
+                       Foreground="White"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Margin="0,0,0,25"/>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+
+                <Border CornerRadius="15"
+                        Margin="10,0,10,0"
+                        Padding="10"
+                        Background="White">
+                    <Button Content="YES"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding ConfirmationDialogYesCommand}"/>
+                </Border>
+
+                <Border CornerRadius="15"
+                        Margin="10,0,10,0"
+                        Padding="10"
+                        Background="White">
+                    <Button Content="NO"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding ConfirmationDialogNoCommand}"/>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

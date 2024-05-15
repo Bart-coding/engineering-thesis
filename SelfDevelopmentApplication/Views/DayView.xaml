@@ -1,0 +1,535 @@
+﻿<UserControl x:Class="SelfDevelopmentApplication.Views.DayView"
+             Name="DefaultDayView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:models="clr-namespace:SelfDevelopmentApplication.Models"
+             xmlns:views="clr-namespace:SelfDevelopmentApplication.Views"
+             xmlns:converters="clr-namespace:SelfDevelopmentApplication.Converters"
+             xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DesignHeight="650" d:DesignWidth="1110"
+             Background="Transparent">
+
+    <Grid>
+        <Grid Margin="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal"
+                        Grid.ColumnSpan="2"
+                        Margin="10,-20,0,0">
+                <Button Content=" &lt; "
+                        Margin="15,30,10,30"
+                        Background="Transparent"
+                        FontWeight="Bold"
+                        FontSize="24"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Command="{Binding NavigateToYesterdayCommand}"/>
+                <TextBlock VerticalAlignment="Center"
+                           Foreground="White"
+                           FontWeight="Bold"
+                           TextAlignment="Center">
+                    <Run Text="{Binding CurrentDate, StringFormat=dd MMMM yyyy}"
+                         FontSize="32"/>
+                    <LineBreak/>
+                    <Run Text="{Binding CurrentDate, StringFormat=dddd}"
+                         FontSize="18"/>
+                </TextBlock>
+                <Button Content=" &gt; "
+                        Margin="10,30,10,30"
+                        Background="Transparent"
+                        FontWeight="Bold"
+                        FontSize="24"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Command="{Binding NavigateToTommorowCommand}"/>
+                <DatePicker VerticalAlignment="Center" 
+                            SelectedDate="{Binding CurrentDate}"
+                            BorderThickness="0"
+                            Language="en-us">
+                    <DatePicker.Resources>
+                        <Style TargetType="DatePickerTextBox">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Style>
+                    </DatePicker.Resources>
+                </DatePicker>
+                <Border CornerRadius="10"
+                    Margin="10,40,0,40"
+                    Padding="5"
+                    Background="#313e4e">
+                    <Button Content="-> to plan"
+                    FontSize="15"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    Background="Transparent"
+                    Padding="8"
+                    BorderThickness="0"
+                    Command="{Binding NavigateToPlanVMCommand}"/>
+                </Border>
+                <views:TasksManagementPanelView DataContext="{Binding ElementName=DefaultDayView,
+                                                                Path=DataContext.TasksPanelVM}"
+                                            Margin="0,25,20,25"/>
+            </StackPanel>
+
+            <Border Grid.Row="1" 
+                    Margin="25,-5,30,40"
+                    BorderBrush="White"
+                    BorderThickness="4"
+                    CornerRadius="5"
+                    Visibility="Collapsed">
+                <DataGrid ItemsSource="{Binding TasksList}"
+                          CanUserSortColumns="True"
+                          CanUserReorderColumns="True"
+                          CanUserDeleteRows="True"
+                          CanUserResizeRows="True"/>
+            </Border>
+
+
+            <StackPanel Grid.Row="1" 
+                        Margin="25,-18,10,0"
+                        Visibility="Visible">
+                <Grid Margin="4,0,0,3"
+                      Panel.ZIndex="100">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="145"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="105"/>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                            Margin="4"
+                            CornerRadius="15"
+                            Padding="10"
+                            Background="#313e4e">
+                        <TextBox Style="{StaticResource FilteringTextBoxStyle}"
+                             VerticalAlignment="Center"
+                             Text="{Binding TasksNamesFilteringText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Tag="Filter...">
+                        </TextBox>
+                    </Border>
+                    <Border Grid.Column="1"
+                            Margin="4"
+                            CornerRadius="15"
+                            Padding="10"
+                            Background="#313e4e">
+                        <TextBox Style="{StaticResource FilteringTextBoxStyle}"
+                             VerticalAlignment="Center"
+                             Text="{Binding TasksDescriptionsFilteringText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Tag="Filter...">
+                        </TextBox>
+                    </Border>
+                    <StackPanel Grid.Column="2" 
+                                Orientation="Vertical"
+                                Margin="4">
+                        <Border 
+                            CornerRadius="15"
+                            Padding="4"
+                            Background="#313e4e">
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center">
+                                <StackPanel.Resources>
+                                    <converters:TimeTextInputValidator_Converter x:Key="HourTextInputValidatorConverter"/>
+                                    <converters:TimeTextInputValidator_Converter x:Key="MinuteTextInputValidatorConverter"/>
+                                </StackPanel.Resources>
+                                <TextBox Text="{Binding FilterFromHour, Mode=TwoWay,
+                                            Converter={StaticResource HourTextInputValidatorConverter},
+                                            ConverterParameter=Hour, UpdateSourceTrigger=PropertyChanged}"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     FontSize="13"
+                                     FontWeight="Bold"
+                                     TextAlignment="Center"
+                                     Foreground="White"/>
+                                <TextBlock Text=":"
+                                       FontSize="13"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"
+                                       TextAlignment="Center"
+                                       Foreground="White"/>
+                                <TextBox Text="{Binding FilterFromMinute, Mode=TwoWay,
+                                            Converter={StaticResource MinuteTextInputValidatorConverter},
+                                            ConverterParameter=Minute, UpdateSourceTrigger=PropertyChanged}"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     FontSize="13"
+                                     FontWeight="Bold"
+                                     TextAlignment="Center"
+                                     Foreground="White"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="White"
+                                BorderThickness="1"
+                                HorizontalAlignment="Center"
+                                Width="6"
+                                Margin="1"/>
+                        <Border 
+                            CornerRadius="15"
+                            Padding="4"
+                            Background="#313e4e">
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center">
+                                <StackPanel.Resources>
+                                    <converters:TimeTextInputValidator_Converter x:Key="HourTextInputValidatorConverter"/>
+                                    <converters:TimeTextInputValidator_Converter x:Key="MinuteTextInputValidatorConverter"/>
+                                </StackPanel.Resources>
+                                <TextBox Text="{Binding FilterToHour, Mode=TwoWay,
+                                            Converter={StaticResource HourTextInputValidatorConverter},
+                                            ConverterParameter=Hour, UpdateSourceTrigger=PropertyChanged}"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     FontSize="13"
+                                     FontWeight="Bold"
+                                     TextAlignment="Center"
+                                     Foreground="White"/>
+                                <TextBlock Text=":"
+                                       FontSize="13"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"
+                                       TextAlignment="Center"
+                                       Foreground="White"/>
+                                <TextBox Text="{Binding FilterToMinute, Mode=TwoWay,
+                                            Converter={StaticResource MinuteTextInputValidatorConverter},
+                                            ConverterParameter=Minute, UpdateSourceTrigger=PropertyChanged}"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     FontSize="13"
+                                     FontWeight="Bold"
+                                     TextAlignment="Center"
+                                     Foreground="White"/>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+
+                    <Border Grid.Column="3"
+                            Background="#313e4e"
+                            Margin="4"
+                            Padding="8"
+                            CornerRadius="15"
+                            Height="55">
+                        <ScrollViewer>
+                            <ScrollViewer.Resources>
+                                <system:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">8</system:Double>
+                            </ScrollViewer.Resources>
+                            <StackPanel>
+                                <CheckBox Content="ToDo"
+                                  FontSize="13"
+                                  Foreground="White"
+                                  Background="Transparent"
+                                  IsChecked="{Binding FilterTasksStatusesList[0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox Content="Done"
+                                  FontSize="13"
+                                  Foreground="White"
+                                  Background="Transparent"
+                                  IsChecked="{Binding FilterTasksStatusesList[1]}"/>
+                                <CheckBox Content="Failed"
+                                  FontSize="13"
+                                  Foreground="White"
+                                  Background="Transparent"
+                                  IsChecked="{Binding FilterTasksStatusesList[2]}"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+
+                    <Border Grid.Column="4"
+                            Background="#313e4e"
+                            Margin="4"
+                            Padding="8"
+                            CornerRadius="15"
+                            Height="55">
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:EventTrigger Behaviors:EventName="MouseEnter">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCategoriesFilterPopupVisibilityCommand}" CommandParameter="Open"/>
+                            </Behaviors:EventTrigger>
+                            <Behaviors:EventTrigger Behaviors:EventName="MouseLeave">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCategoriesFilterPopupVisibilityCommand}" CommandParameter="Close"/>
+                            </Behaviors:EventTrigger>
+                        </Behaviors:Interaction.Triggers>
+                        <Grid>
+                            <TextBox Style="{StaticResource FilteringTextBoxStyle}"
+                                 Text="{Binding TasksCategoriesFilteringText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Tag="Filter..."
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Center"/>
+
+                            <Popup x:Name="FilterCategoriesPopup" PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=Border}}"
+                               IsOpen="{Binding IsCategoriesFilterPopupVisibile}"
+                               Placement="Bottom"
+                               MaxHeight="65">
+                                <Behaviors:Interaction.Triggers>
+                                    <Behaviors:EventTrigger Behaviors:EventName="MouseEnter">
+                                        <Behaviors:InvokeCommandAction Command="{Binding ChangeCategoriesFilterPopupVisibilityCommand}" CommandParameter="Open"/>
+                                    </Behaviors:EventTrigger>
+                                    <Behaviors:EventTrigger Behaviors:EventName="MouseLeave">
+                                        <Behaviors:InvokeCommandAction Command="{Binding ChangeCategoriesFilterPopupVisibilityCommand}" CommandParameter="Close"/>
+                                    </Behaviors:EventTrigger>
+                                </Behaviors:Interaction.Triggers>
+                                <ScrollViewer CanContentScroll="True"
+                                          Background="#313e4e"
+                                          Width="118">
+                                    <ScrollViewer.Resources>
+                                        <system:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">8</system:Double>
+                                    </ScrollViewer.Resources>
+                                    <ItemsControl ItemsSource="{Binding DataContext.TasksCategoriesViewList, ElementName=DefaultDayView}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type models:TaskCategoryModel}">
+                                                <CheckBox x:Name="FilterCategoriesCheckBox"
+                                                  Content="{Binding Name}"
+                                                  FontSize="13"
+                                                  Foreground="White"
+                                                  Background="Transparent"
+                                                  IsChecked="True">
+                                                    <Behaviors:Interaction.Triggers>
+                                                        <Behaviors:EventTrigger SourceName="FilterCategoriesCheckBox" EventName="Checked">
+                                                            <Behaviors:InvokeCommandAction Command="{Binding DataContext.FilterCheckCategory, ElementName=DefaultDayView}"
+                                                                                   CommandParameter="{Binding}"/>
+                                                        </Behaviors:EventTrigger>
+                                                        <Behaviors:EventTrigger SourceName="FilterCategoriesCheckBox" EventName="Unchecked">
+                                                            <Behaviors:InvokeCommandAction Command="{Binding DataContext.FilterCheckCategory, ElementName=DefaultDayView}"
+                                                                                   CommandParameter="{Binding}"/>
+                                                        </Behaviors:EventTrigger>
+                                                    </Behaviors:Interaction.Triggers>
+                                                </CheckBox>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Popup>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="5"
+                            Background="#313e4e"
+                            Margin="4"
+                            Padding="6"
+                            CornerRadius="15"
+                            Height="55">
+                        <ScrollViewer>
+                            <ScrollViewer.Resources>
+                                <system:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">8</system:Double>
+                            </ScrollViewer.Resources>
+                            <StackPanel>
+                                <CheckBox Content="Imp-Urgent"
+                                  FontSize="10"
+                                  Foreground="White"
+                                  Background="Transparent"
+                                  IsChecked="{Binding FilterTasksPrioritiesList[0]}"/>
+                                <CheckBox Content="Imp-N-Urgent"
+                                  FontSize="10"
+                                  Foreground="White"
+                                  Background="Transparent"
+                                  IsChecked="{Binding FilterTasksPrioritiesList[1]}"/>
+                                <CheckBox Content="N-Imp-Urgent"
+                                  FontSize="10"
+                                  Foreground="White"
+                                  Background="Transparent"
+                                  IsChecked="{Binding FilterTasksPrioritiesList[2]}"/>
+                                <CheckBox Content="N-Imp-N-Urgent"
+                                  FontSize="10"
+                                  Foreground="White"
+                                  Background="Transparent"
+                                  IsChecked="{Binding FilterTasksPrioritiesList[3]}"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+
+                </Grid>
+
+                <Border BorderBrush="White"
+                    BorderThickness="4"
+                    CornerRadius="5"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Height="415">
+
+                    <Grid>
+                        <DataGrid Name="TasksListDataGrid"
+                                  DataContext="{Binding DataContext.TasksPanelVM, ElementName=DefaultDayView}"
+                                  ItemsSource="{Binding DataContext.TasksList, ElementName=DefaultDayView}"
+                                  AutoGenerateColumns="False"
+                                  CanUserSortColumns="False"
+                                  CanUserResizeColumns="False"
+                                  CanUserResizeRows="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserReorderColumns="False"
+                                  IsReadOnly="True"
+                                  Background="Transparent"
+                                  VerticalScrollBarVisibility="Visible"
+                                  EnableRowVirtualization="False"
+                                  ScrollViewer.CanContentScroll="True"
+                                  Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}}"
+                                  Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}"
+                                  Style="{StaticResource TasksListDataGridStyle}"
+                                  ColumnHeaderStyle="{StaticResource TasksListDataGridColumnHeaderStyle}"
+                                  RowStyle="{StaticResource TasksListDataGridRowStyle}"
+                                  CellStyle="{StaticResource TasksListDataGridCellStyle}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn x:Name="NameColumn"
+                                                    Header="TaskName"
+                                                    Width="150"
+                                                    Binding="{Binding Name, Converter={StaticResource TextShortenerConverter}, ConverterParameter=17}"/>
+                                <DataGridTextColumn Header="Description"
+                                                    Width="145"
+                                                    FontSize="13"
+                                                    SortMemberPath="Description"
+                                                    Binding="{Binding Description, Converter={StaticResource TextShortenerConverter}, ConverterParameter=18}"/>
+                                <DataGridTextColumn Header="Time"
+                                                    Width="100"
+                                                    FontSize="13"
+                                                    Binding="{Binding AssignedDateTime, StringFormat=HH:mm}"/>
+                                <DataGridTextColumn Header="Status"
+                                                    Width="105"
+                                                    FontSize="13"
+                                                    Binding="{Binding Status}"/>
+                                <DataGridTextColumn Header="Category"
+                                                    Width="130"
+                                                    FontSize="13"
+                                                    Binding="{Binding Category.Name, Converter={StaticResource TextShortenerConverter}, ConverterParameter=14}"/>
+                                <DataGridTextColumn Header="Priority"
+                                                    Width="*"
+                                                    FontSize="11"
+                                                    Binding="{Binding Priority}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource TasksListDataGridCellStyle}">
+                                            <Setter Property="Tag" Value="Priority"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Priority}" Value="0">
+                                                    <Setter Property="Background" Value="Yellow"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Priority}" Value="1">
+                                                    <Setter Property="Background" Value="Orange"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Priority}" Value="2">
+                                                    <Setter Property="Background" Value="Purple"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Priority}" Value="3">
+                                                    <Setter Property="Background" Value="Gray"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" 
+                                   Text="There are no tasks on list!"
+                                   FontSize="40"
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   Visibility="{Binding ElementName=TasksListDataGrid, Path=Tag}">
+                        </TextBlock>
+                    </Grid>
+
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        Margin="0,30,40,0">
+                <views:MoodStatusPanelView DataContext="{Binding DataContext.MoodStatusPanelVM, ElementName=DefaultDayView}"
+                                           Visibility="{Binding DataContext.IsCurrentDayNotFutureDay, ElementName=DefaultDayView, Converter={StaticResource BoolToVisConverter}}"/>
+
+                <Border CornerRadius="20"
+                        Padding="20"
+                        Background="#f3efe9"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom">
+                    <Button Content="NOTES"
+                            FontSize="25"
+                            FontWeight="Bold"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding NavigateToNotesVMCommand}"/>
+                </Border>
+            </StackPanel>
+            
+
+        </Grid>
+
+        <views:TaskView DataContext="{Binding ElementName=DefaultDayView,
+                                              Path=DataContext.TasksPanelVM}"
+                        Panel.ZIndex="2"
+                        Visibility="{Binding Path=ShowTaskDialog, 
+                                     Converter={StaticResource BoolToVisConverter}}"/>
+        <views:ConfirmationDialogView DataContext="{Binding ElementName=DefaultDayView,
+                                              Path=DataContext.TasksPanelVM}"
+                                      Panel.ZIndex="2"
+                                      Visibility="{Binding Path=ShowConfirmationDialog, 
+                                                   Converter={StaticResource BoolToVisConverter}}"
+                                      Tag="Are you sure you want to delete?"/>
+        <views:MessageBoxView DataContext="{Binding ElementName=DefaultDayView,
+                                              Path=DataContext.TasksPanelVM}"
+                              Panel.ZIndex="2"
+                              Visibility="{Binding Path=ShowMessageBox, 
+                                                   Converter={StaticResource BoolToVisConverter}}"
+                              Tag="Succeed! Task lists will be updated."/>
+        
+        <Grid DataContext="{Binding ElementName=DefaultDayView,
+                                    Path=DataContext.TasksPanelVM}"
+              Visibility="Collapsed"
+              Panel.ZIndex="1"
+              Background="Black"
+              Opacity="0.5">
+            <Button Background="Transparent">
+                <Behaviors:Interaction.Triggers>
+                    <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <Behaviors:Interaction.Behaviors>
+                            <Behaviors:ConditionBehavior>
+                                <Behaviors:ConditionalExpression>
+                                    <Behaviors:ComparisonCondition LeftOperand="{Binding ShowTaskDialog}"
+                                                                   RightOperand="True"/>
+                                </Behaviors:ConditionalExpression>
+                            </Behaviors:ConditionBehavior>
+                        </Behaviors:Interaction.Behaviors>
+
+                        <Behaviors:InvokeCommandAction Command="{Binding CancelTaskDialogCommand}"/>
+                    </Behaviors:EventTrigger>
+                    <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <Behaviors:Interaction.Behaviors>
+                            <Behaviors:ConditionBehavior>
+                                <Behaviors:ConditionalExpression>
+                                    <Behaviors:ComparisonCondition LeftOperand="{Binding ShowConfirmationDialog}"
+                                                                   RightOperand="True"/>
+                                </Behaviors:ConditionalExpression>
+                            </Behaviors:ConditionBehavior>
+                        </Behaviors:Interaction.Behaviors>
+
+                        <Behaviors:InvokeCommandAction Command="{Binding ConfirmationDialogNoCommand}"/>
+                    </Behaviors:EventTrigger>
+                </Behaviors:Interaction.Triggers>
+            </Button>
+            <Behaviors:Interaction.Triggers>
+                <Behaviors:DataTrigger Binding="{Binding ShowTaskDialog}" Value="True">
+                    <Behaviors:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                </Behaviors:DataTrigger>
+                <Behaviors:DataTrigger Binding="{Binding ShowTaskDialog}" Value="False">
+                    <Behaviors:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                </Behaviors:DataTrigger>
+                <Behaviors:DataTrigger Binding="{Binding ShowConfirmationDialog}" Value="True">
+                    <Behaviors:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                </Behaviors:DataTrigger>
+                <Behaviors:DataTrigger Binding="{Binding ShowConfirmationDialog}" Value="False">
+                    <Behaviors:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                </Behaviors:DataTrigger>
+            </Behaviors:Interaction.Triggers>
+        </Grid>
+
+    </Grid>
+    
+</UserControl>

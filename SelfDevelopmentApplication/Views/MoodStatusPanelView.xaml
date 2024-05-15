@@ -1,0 +1,845 @@
+﻿<UserControl x:Class="SelfDevelopmentApplication.Views.MoodStatusPanelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel HorizontalAlignment="Stretch">
+
+        <TextBlock HorizontalAlignment="Center"
+                   Text="Gratitude"
+                   FontSize="30"
+                   FontFamily="Comic Sans MS"
+                   Foreground="White"
+                   Background="Transparent"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                    Margin="0,-5,0,0"
+                    Height="50">
+            <Behaviors:Interaction.Triggers>
+
+                <Behaviors:EventTrigger EventName="MouseLeave">
+
+                    <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}"/>
+
+                </Behaviors:EventTrigger>
+            </Behaviors:Interaction.Triggers>
+
+            <TextBlock x:Name="Gratitude_Star1" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="8,5,5,5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Gratitude_Star1}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                           CommandParameter="Gratitude"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>0</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Gratitude][0]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Gratitude][0]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>0</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Gratitude_Star2" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Gratitude_Star2}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                           CommandParameter="Gratitude"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>1</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Gratitude][1]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Gratitude][1]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>1</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Gratitude_Star3" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Gratitude_Star3}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                           CommandParameter="Gratitude"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>2</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Gratitude][2]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Gratitude][2]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>2</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Gratitude_Star4" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Gratitude_Star4}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                           CommandParameter="Gratitude"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>3</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Gratitude][3]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Gratitude][3]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>3</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Gratitude_Star5" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5,5,8,5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Gratitude_Star5}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                           CommandParameter="Gratitude"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>4</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Gratitude][4]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Gratitude][4]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>4</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+        </StackPanel>
+
+        <TextBlock HorizontalAlignment="Center"
+                   Text="Joy"
+                   FontSize="30"
+                   FontFamily="Comic Sans MS"
+                   Foreground="White"
+                   Background="Transparent"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                    Margin="0,-5,0,0"
+                    Height="50">
+            <Behaviors:Interaction.Triggers>
+                <Behaviors:EventTrigger EventName="MouseLeave">
+
+                    <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}"/>
+
+                </Behaviors:EventTrigger>
+            </Behaviors:Interaction.Triggers>
+
+            <TextBlock x:Name="Joy_Star1" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="8,5,5,5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Joy_Star1}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Joy"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>0</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Joy][0]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Joy][0]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>0</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Joy_Star2" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Joy_Star2}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Joy"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>1</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Joy][1]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Joy][1]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>1</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Joy_Star3" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Joy_Star3}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Joy"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>2</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Joy][2]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Joy][2]}" Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>2</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Joy_Star4" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Joy_Star4}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Joy"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>3</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Joy][3]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Joy][3]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>3</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Joy_Star5" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5,5,8,5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Joy_Star5}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Joy"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>4</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Joy][4]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Joy][4]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>4</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+        </StackPanel>
+
+        <TextBlock HorizontalAlignment="Center"
+                   Text="Stress"
+                   FontSize="30"
+                   FontFamily="Comic Sans MS"
+                   Foreground="White"
+                   Background="Transparent"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                    Margin="0,-5,0,0"
+                    Height="50">
+            <Behaviors:Interaction.Triggers>
+                <Behaviors:EventTrigger EventName="MouseLeave">
+
+                    <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}"/>
+
+                </Behaviors:EventTrigger>
+            </Behaviors:Interaction.Triggers>
+
+            <TextBlock x:Name="Stress_Star1" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="8,5,5,5">
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Stress_Star1}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Stress"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>0</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Stress][0]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Stress][0]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>0</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Stress_Star2" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Stress_Star2}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Stress"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>1</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Stress][1]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Stress][1]}" Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>1</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Stress_Star3" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Stress_Star3}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Stress"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>2</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Stress][2]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Stress][2]}" Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>2</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Stress_Star4" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Stress_Star4}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Stress"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>3</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Stress][3]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Stress][3]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>3</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Stress_Star5" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5,5,8,5">
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Stress_Star5}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Stress"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>4</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Stress][4]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Stress][4]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>4</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+        </StackPanel>
+
+        <TextBlock HorizontalAlignment="Center"
+                   Text="Anger"
+                   FontSize="30"
+                   FontFamily="Comic Sans MS"
+                   Foreground="White"
+                   Background="Transparent"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                    Margin="0,-5,0,0"
+                    Height="50">
+            <Behaviors:Interaction.Triggers>
+                <Behaviors:EventTrigger EventName="MouseLeave">
+
+                    <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}"/>
+
+                </Behaviors:EventTrigger>
+            </Behaviors:Interaction.Triggers>
+
+            <TextBlock x:Name="Anger_Star1" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="8,5,5,5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Anger_Star1}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Anger"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>0</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Anger][0]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Anger][0]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>0</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Anger_Star2" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Anger_Star2}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Anger"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>1</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Anger][1]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Anger][1]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>1</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Anger_Star3" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Anger_Star3}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Anger"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>2</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Anger][2]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Anger][2]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>2</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Anger_Star4" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Anger_Star4}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Anger"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>3</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Anger][3]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Anger][3]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>3</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+            <TextBlock x:Name="Anger_Star5" HorizontalAlignment="Center"
+                       Text="*"
+                       FontSize="38"
+                       FontFamily="Comic Sans MS"
+                       Foreground="White"
+                       Background="Transparent"
+                       Padding="5,5,8,5">
+                        <Behaviors:Interaction.Triggers>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding IsMouseOver, ElementName=Anger_Star5}" Value="True">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeCurrentMoodProperty}"
+                                                               CommandParameter="Anger"/>
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStarsCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>4</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Anger][4]}"  Value="True">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Gold"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:DataTrigger Binding="{Binding MoodStatusStarsListDictionary[Anger][4]}"  Value="False">
+                                <Behaviors:ChangePropertyAction PropertyName="Foreground" Value="Black"/>
+                            </Behaviors:DataTrigger>
+                            
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <Behaviors:InvokeCommandAction Command="{Binding ChangeMoodStatusCommand}">
+                                    <Behaviors:InvokeCommandAction.CommandParameter>
+                                        <system:Int16>4</system:Int16>
+                                    </Behaviors:InvokeCommandAction.CommandParameter>
+                                </Behaviors:InvokeCommandAction>
+                            </Behaviors:EventTrigger>
+                            
+                         </Behaviors:Interaction.Triggers>
+            </TextBlock>
+        </StackPanel>
+    </StackPanel>
+
+</UserControl>

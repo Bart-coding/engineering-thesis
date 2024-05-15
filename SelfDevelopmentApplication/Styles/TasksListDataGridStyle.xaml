@@ -1,0 +1,441 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:converters="clr-namespace:SelfDevelopmentApplication.Converters"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+
+    <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Rectangle x:Name="Border" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" SnapsToDevicePixels="True"/>
+                        <Polygon x:Name="Arrow" Fill="Black" HorizontalAlignment="Right" Margin="8,8,3,3" Opacity="0.15" Points="0,10 10,10 10,0" Stretch="Uniform" VerticalAlignment="Bottom"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Stroke" TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Fill" TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="Arrow" Value="Collapsed"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TasksListDataGridStyle" TargetType="{x:Type DataGrid}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="#FF688CAF"/>
+        <Setter Property="GridLinesVisibility" Value="None"/>
+        <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGrid}">
+                    <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false">
+                            <ScrollViewer.Template>
+                                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Button Command="{x:Static DataGrid.SelectAllCommand}" Focusable="false" Style="{DynamicResource {ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}}" Visibility="{Binding HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.All}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                        <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" Grid.Column="1" Visibility="{Binding HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.ColumnSpan="2" CanContentScroll="{TemplateBinding CanContentScroll}" Grid.Row="1"/>
+                                        <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="2" Maximum="{TemplateBinding ScrollableHeight}" Orientation="Vertical" Grid.Row="1" ViewportSize="{TemplateBinding ViewportHeight}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                                        <Grid Grid.Column="1" Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Column="1" Maximum="{TemplateBinding ScrollableWidth}" Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                                        </Grid>
+                                    </Grid>
+                                </ControlTemplate>
+                            </ScrollViewer.Template>
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Tag" Value="Collapsed"/>
+        <!--The visibility value of an external notification that the ItemsSource is empty-->
+
+        <Style.Triggers>
+
+            <DataTrigger Binding="{Binding DataContext.IsTasksListEmpty, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                <Setter Property="IsEnabled" Value="False"/>
+                <Setter Property="Opacity" Value="0.2"/>
+                <Setter Property="Tag" Value="Visible"/>
+            </DataTrigger>
+            
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsGrouping" Value="true"/>
+                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="ColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TasksListDataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    
+                </MultiDataTrigger.Conditions>
+            </MultiDataTrigger>
+            
+        </Style.Triggers>
+        <Setter Property="Background" Value="#142439"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0,0,3,7"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="Padding" Value="10,20,10,20"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid>
+                        <Behaviors:Interaction.Triggers>
+
+                            <Behaviors:DataTrigger Binding="{Binding DataContext.SortDirection, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{x:Null}">
+
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Tag" Value=""/>
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Background" Value="#142439"/>
+                            </Behaviors:DataTrigger>
+
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown" SourceObject="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+
+
+                                <Behaviors:InvokeCommandAction Command="{Binding DataContext.SortTasksCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                               CommandParameter="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </Behaviors:EventTrigger>
+
+
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown" SourceObject="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                <Behaviors:Interaction.Behaviors>
+                                <Behaviors:ConditionBehavior>
+                                    <Behaviors:ConditionalExpression>
+                                        <Behaviors:ComparisonCondition LeftOperand="{Binding DataContext.SortDirection, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                       RightOperand="Descending"/>
+                                    </Behaviors:ConditionalExpression>
+                                </Behaviors:ConditionBehavior>
+                                </Behaviors:Interaction.Behaviors>
+
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Tag" Value="▾"/>
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Background" Value="Purple"/>
+                            </Behaviors:EventTrigger>
+
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown" SourceObject="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                <Behaviors:Interaction.Behaviors>
+                                    <Behaviors:ConditionBehavior>
+                                        <Behaviors:ConditionalExpression>
+                                            <Behaviors:ComparisonCondition LeftOperand="{Binding DataContext.SortDirection, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                           RightOperand="Ascending"/>
+                                        </Behaviors:ConditionalExpression>
+                                    </Behaviors:ConditionBehavior>
+                                </Behaviors:Interaction.Behaviors>
+
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Tag" Value="▴"/>
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Background" Value="Purple"/>
+                            </Behaviors:EventTrigger>
+                        </Behaviors:Interaction.Triggers>
+                        <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <TextBlock Text="{TemplateBinding Tag}" FontSize="20" FontWeight="Bold" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource ColumnHeaderGripperStyle}"/>
+                        <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Style="{StaticResource ColumnHeaderGripperStyle}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TasksListDataGridCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Tag" Value="Empty"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <Border BorderBrush="White" BorderThickness="0,0,3,6">
+                        <Grid>
+                            <Border x:Name="PriorityCircleBorder"
+                                    Height="12"
+                                    Width="12"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    CornerRadius="20"
+                                    BorderThickness="1"
+                                    BorderBrush="Black"
+                                    Margin="3"
+                                    Background="{TemplateBinding Background}"
+                                    Visibility="Collapsed"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Tag" Value="Priority">
+                            <Setter TargetName="PriorityCircleBorder" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="TasksListDataGridRowStyle" TargetType="{x:Type DataGridRow}">
+        <Setter Property="Height" Value="80"/>
+        <Setter Property="Background" Value="#142439"/>
+        <Setter Property="Opacity" Value="0.9"/>
+        <Setter Property="Tag" Value="False"/>
+        <!--Is the task selected-->
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
+        <Setter Property="ValidationErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <TextBlock Foreground="Red" Margin="2,0,0,0" Text="!" VerticalAlignment="Center"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRow}">
+                    <Grid>
+                        <Grid.Resources>
+                            <converters:StringBooleanInverter_Converter x:Key="StringBooleanInverterConverter"/>
+                        </Grid.Resources>
+
+                        <Border x:Name="DGR_Border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
+                            <SelectiveScrollingGrid>
+                                <SelectiveScrollingGrid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0"/>
+                                    <ColumnDefinition Width="*"/>
+                                </SelectiveScrollingGrid.ColumnDefinitions>
+                                <SelectiveScrollingGrid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </SelectiveScrollingGrid.RowDefinitions>
+
+                                <DataGridCellsPresenter Grid.Column="1" ItemsPanel="{TemplateBinding ItemsPanel}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                                <DataGridDetailsPresenter Grid.Column="1" Grid.Row="1" SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding AreRowDetailsFrozen, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Visibility="{TemplateBinding DetailsVisibility}"/>
+                                <DataGridRowHeader Grid.RowSpan="2" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Visibility="{Binding HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                            </SelectiveScrollingGrid>
+                        </Border>
+
+
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:EventTrigger EventName="MouseRightButtonDown" SourceObject="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                <Behaviors:Interaction.Behaviors>
+                                    <Behaviors:ConditionBehavior>
+                                        <Behaviors:ConditionalExpression>
+                                            <Behaviors:ComparisonCondition LeftOperand="{Binding DataContext.DisplayMode, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                                           RightOperand="True"/>
+                                        </Behaviors:ConditionalExpression>
+                                    </Behaviors:ConditionBehavior>
+                                </Behaviors:Interaction.Behaviors>
+
+                                <Behaviors:InvokeCommandAction Command="{Binding DataContext.DeleteTaskCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                               CommandParameter="{Binding}"/>
+                            </Behaviors:EventTrigger>
+
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown" SourceObject="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                <Behaviors:Interaction.Behaviors>
+                                    <Behaviors:ConditionBehavior>
+                                        <Behaviors:ConditionalExpression>
+                                            <Behaviors:ComparisonCondition LeftOperand="{Binding DataContext.DisplayMode, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                                           RightOperand="True"/>
+                                        </Behaviors:ConditionalExpression>
+                                    </Behaviors:ConditionBehavior>
+                                </Behaviors:Interaction.Behaviors>
+
+                                <Behaviors:InvokeCommandAction Command="{Binding DataContext.ShowTaskDialogCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                               CommandParameter="{Binding}"/>
+                            </Behaviors:EventTrigger>
+
+                            <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown" SourceObject="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                <Behaviors:Interaction.Behaviors>
+                                    <Behaviors:ConditionBehavior>
+                                        <Behaviors:ConditionalExpression>
+                                            <Behaviors:ComparisonCondition LeftOperand="{Binding DataContext.DisplayMode, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                                           RightOperand="False"/>
+                                        </Behaviors:ConditionalExpression>
+                                    </Behaviors:ConditionBehavior>
+                                </Behaviors:Interaction.Behaviors>
+
+                                <Behaviors:InvokeCommandAction Command="{Binding DataContext.ModifySelectedTasksListCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                               CommandParameter="{Binding}"/>
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Tag"
+                                                                Value="{Binding Tag, RelativeSource={RelativeSource TemplatedParent},
+                                                                        Converter={StaticResource StringBooleanInverterConverter}}"/>
+                            </Behaviors:EventTrigger>
+
+                            <Behaviors:DataTrigger Binding="{Binding DataContext.SelectAllTasks, 
+                                                             RelativeSource={RelativeSource AncestorType=DataGrid}}" Value="True">
+                                <Behaviors:Interaction.Behaviors>
+                                    <Behaviors:ConditionBehavior>
+                                        <Behaviors:ConditionalExpression>
+                                            <Behaviors:ComparisonCondition LeftOperand="{Binding}"
+                                                                           RightOperand="{x:Null}"
+                                                                           Operator="NotEqual"/>
+                                            <Behaviors:ComparisonCondition LeftOperand="{Binding Tag, 
+                                                                                         RelativeSource={RelativeSource TemplatedParent}}"
+                                                                           RightOperand="False"/>
+                                        </Behaviors:ConditionalExpression>
+                                    </Behaviors:ConditionBehavior>
+                                </Behaviors:Interaction.Behaviors>
+
+                                <Behaviors:InvokeCommandAction Command="{Binding DataContext.ModifySelectedTasksListCommand, 
+                                                                         RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                               CommandParameter="{Binding}"/>
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding 
+                                                                               RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Tag">
+                                    <Behaviors:ChangePropertyAction.Value>
+                                        <system:String>True</system:String>
+                                    </Behaviors:ChangePropertyAction.Value>
+                                </Behaviors:ChangePropertyAction>
+                            </Behaviors:DataTrigger>
+
+                            <Behaviors:DataTrigger Binding="{Binding DataContext.UnselectTasks, 
+                                                             RelativeSource={RelativeSource AncestorType=DataGrid}}" Value="True">
+                                <Behaviors:Interaction.Behaviors>
+                                    <Behaviors:ConditionBehavior>
+                                        <Behaviors:ConditionalExpression>
+                                            <Behaviors:ComparisonCondition LeftOperand="{Binding Tag, 
+                                                                                         RelativeSource={RelativeSource TemplatedParent}}"
+                                                                           RightOperand="True"/>
+                                        </Behaviors:ConditionalExpression>
+                                    </Behaviors:ConditionBehavior>
+                                </Behaviors:Interaction.Behaviors>
+
+                                <Behaviors:InvokeCommandAction Command="{Binding DataContext.ModifySelectedTasksListCommand, 
+                                                                                 RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                               CommandParameter="{Binding}"/>
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Tag">
+                                    <Behaviors:ChangePropertyAction.Value>
+                                        <system:String>False</system:String>
+                                    </Behaviors:ChangePropertyAction.Value>
+                                </Behaviors:ChangePropertyAction>
+                            </Behaviors:DataTrigger>
+
+                            <Behaviors:DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" Value="False">
+                                <Behaviors:Interaction.Behaviors>
+                                    <Behaviors:ConditionBehavior>
+                                        <Behaviors:ConditionalExpression>
+                                            <Behaviors:ComparisonCondition LeftOperand="{Binding DataContext.DisplayMode, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                                           RightOperand="False"/>
+                                        </Behaviors:ConditionalExpression>
+                                    </Behaviors:ConditionBehavior>
+                                </Behaviors:Interaction.Behaviors>
+
+
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Opacity"
+                                                                Value="0.9"/>
+                            </Behaviors:DataTrigger>
+
+                            <Behaviors:DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                <Behaviors:Interaction.Behaviors>
+                                    <Behaviors:ConditionBehavior>
+                                        <Behaviors:ConditionalExpression>
+                                            <Behaviors:ComparisonCondition LeftOperand="{Binding DataContext.DisplayMode, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                                           RightOperand="False"/>
+                                        </Behaviors:ConditionalExpression>
+                                    </Behaviors:ConditionBehavior>
+
+
+                                </Behaviors:Interaction.Behaviors>
+
+
+                                <Behaviors:ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                                PropertyName="Opacity"
+                                                                Value="0.2"/>
+                            </Behaviors:DataTrigger>
+
+
+                        </Behaviors:Interaction.Triggers>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsNewItem" Value="True">
+                <Setter Property="Margin" Value="{Binding NewItemMargin, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+            </Trigger>
+
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderThickness" Value="0,0,0,8"/>
+                <Setter Property="BorderBrush" Value="#142439"/>
+            </Trigger>
+
+            <DataTrigger Binding="{Binding Status}" Value="0">
+                <Setter Property="Background" Value="#5e17eb"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Status}" Value="1">
+                <Setter Property="Background" Value="#00bf63"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Status}" Value="2">
+                <Setter Property="Background" Value="#ff3131"/>
+            </DataTrigger>
+
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

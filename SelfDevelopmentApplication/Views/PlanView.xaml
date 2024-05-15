@@ -1,0 +1,530 @@
+﻿<UserControl x:Class="SelfDevelopmentApplication.Views.PlanView"
+             Name="DefaultPlanView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:SelfDevelopmentApplication.Views"
+             xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d"
+             d:DesignHeight="650" d:DesignWidth="1110"
+             Background="Transparent">
+    <UserControl.InputBindings>
+        <KeyBinding Key="T" Modifiers="Ctrl" 
+                    Command="{Binding TasksPanelVM.ChangeSelectedTasksStatusCommand}"
+                    CommandParameter="0"/>
+        <KeyBinding Key="D" Modifiers="Ctrl" 
+                    Command="{Binding TasksPanelVM.ChangeSelectedTasksStatusCommand}"
+                    CommandParameter="1"/>
+        <KeyBinding Key="F" Modifiers="Ctrl" 
+                    Command="{Binding TasksPanelVM.ChangeSelectedTasksStatusCommand}"
+                    CommandParameter="2"/>
+
+        <KeyBinding Key="D1" Modifiers="Ctrl" 
+                    Command="{Binding TasksPanelVM.ChangeSelectedTasksPriorityCommand}"
+                    CommandParameter="0"/>
+        <KeyBinding Key="D2" Modifiers="Ctrl" 
+                    Command="{Binding TasksPanelVM.ChangeSelectedTasksPriorityCommand}"
+                    CommandParameter="1"/>
+        <KeyBinding Key="D3" Modifiers="Ctrl" 
+                    Command="{Binding TasksPanelVM.ChangeSelectedTasksPriorityCommand}"
+                    CommandParameter="2"/>
+        <KeyBinding Key="D4" Modifiers="Ctrl" 
+                    Command="{Binding TasksPanelVM.ChangeSelectedTasksPriorityCommand}"
+                    CommandParameter="3"/>
+
+        <KeyBinding Key="S" Modifiers="Ctrl" 
+                    Command="{Binding TasksPanelVM.SelectAllTasksCommand}"/>
+        <KeyBinding Key="U" Modifiers="Ctrl" 
+                    Command="{Binding TasksPanelVM.UnselectTasksCommand}"/>
+    </UserControl.InputBindings>
+    <Grid>
+        <Grid Margin="-10,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal"
+                    Margin="68,10,0,0"
+                    HorizontalAlignment="Stretch">
+                <Button Content="&lt;"
+                    Background="Transparent"
+                    FontWeight="Bold"
+                    FontSize="35"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Padding="10"
+                    Margin="0,0,10,0"
+                    Command="{Binding NavigateToLastWeekCommand}"/>
+                <Button Content="&gt;"
+                    Background="Transparent"
+                    FontWeight="Bold"
+                    FontSize="35"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Padding="10"
+                    Margin="0,0,5,0"
+                    Command="{Binding NavigateToNextWeekCommand}"/>
+                <TextBlock Text="{Binding Path=CurrentMonday, StringFormat=MMMM yyyy}"
+                       VerticalAlignment="Center"
+                       FontSize="40"
+                       Foreground="White"
+                       FontWeight="Bold"
+                       Margin="0,0,10,0"/>
+                <DatePicker VerticalAlignment="Center"
+                            SelectedDate="{Binding PickedDay}"
+                            BorderThickness="0"
+                            Language="en-us">
+                    <DatePicker.Resources>
+                        <Style TargetType="DatePickerTextBox">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Style>
+                    </DatePicker.Resources>
+                </DatePicker>
+
+                <views:TasksManagementPanelView DataContext="{Binding ElementName=DefaultPlanView, Path=DataContext.TasksPanelVM}"/>
+                
+            </StackPanel>
+
+            <Border Grid.Row="1"
+                HorizontalAlignment="Center"
+                Margin="-40,10,0,40"
+                BorderBrush="White"
+                BorderThickness="3"
+                CornerRadius="2">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Name="HeadersGrid" 
+                      HorizontalAlignment="Left"
+                      Width="{Binding ElementName=TableListScrollViewer,Path=ActualWidth}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="135"/>
+                            <ColumnDefinition Width="135"/>
+                            <ColumnDefinition Width="135"/>
+                            <ColumnDefinition Width="135"/>
+                            <ColumnDefinition Width="135"/>
+                            <ColumnDefinition Width="135"/>
+                            <ColumnDefinition Width="135"/>
+                            <ColumnDefinition Width="12"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource PlanViewTableLabelStyle}"/>
+                        </Grid.Resources>
+                        <Button Grid.Column="0"
+                            BorderBrush="White"
+                            BorderThickness="0,0,3,0"
+                            Command="{Binding NavigateToDayVMCommand}"
+                            CommandParameter="{Binding CurrentWeekDays[0]}">
+                            <TextBlock TextAlignment="Center"
+                                       FontWeight="Bold"
+                                       Foreground="White">
+                            <Run Text="MON"
+                                 FontSize="25" />
+                            <LineBreak/>
+                            <Run Text="{Binding CurrentWeekDays[0], StringFormat=dd}"
+                                 FontSize="20"
+                                 BaselineAlignment="Center"/>
+                            </TextBlock>
+                        </Button>
+                        <Button Grid.Column="1"
+                            BorderBrush="White"
+                            BorderThickness="0,0,3,0"
+                            Command="{Binding NavigateToDayVMCommand}"
+                            CommandParameter="{Binding CurrentWeekDays[1]}">
+                            <TextBlock TextAlignment="Center"
+                                       FontWeight="Bold"
+                                       Foreground="White">
+                            <Run Text="TUE"
+                                 FontSize="25" />
+                            <LineBreak/>
+                            <Run Text="{Binding CurrentWeekDays[1], StringFormat=dd}"
+                                 FontSize="20"
+                                 BaselineAlignment="Center"/>
+                            </TextBlock>
+                        </Button>
+                        <Button Grid.Column="2"
+                            BorderBrush="White"
+                            BorderThickness="0,0,3,0"
+                            Command="{Binding NavigateToDayVMCommand}"
+                            CommandParameter="{Binding CurrentWeekDays[2]}">
+                            <TextBlock TextAlignment="Center"
+                                   FontWeight="Bold"
+                                   Foreground="White">
+                            <Run Text="WED"
+                                 FontSize="25" />
+                            <LineBreak/>
+                            <Run Text="{Binding CurrentWeekDays[2], StringFormat=dd}"
+                                 FontSize="20"
+                                 BaselineAlignment="Center"/>
+                            </TextBlock>
+                        </Button>
+                        <Button Grid.Column="3"
+                            BorderBrush="White"
+                            BorderThickness="0,0,3,0"
+                            Command="{Binding NavigateToDayVMCommand}"
+                            CommandParameter="{Binding CurrentWeekDays[3]}">
+                            <TextBlock TextAlignment="Center"
+                                   FontWeight="Bold"
+                                   Foreground="White">
+                            <Run Text="THU"
+                                 FontSize="25" />
+                            <LineBreak/>
+                            <Run Text="{Binding CurrentWeekDays[3], StringFormat=dd}"
+                                 FontSize="20"
+                                 BaselineAlignment="Center"/>
+                            </TextBlock>
+                        </Button>
+                        <Button Grid.Column="4"
+                            BorderBrush="White"
+                            BorderThickness="0,0,3,0"
+                            Command="{Binding NavigateToDayVMCommand}"
+                            CommandParameter="{Binding CurrentWeekDays[4]}">
+                            <TextBlock TextAlignment="Center"
+                                   FontWeight="Bold"
+                                   Foreground="White">
+                            <Run Text="FRI"
+                                 FontSize="25" />
+                            <LineBreak/>
+                            <Run Text="{Binding CurrentWeekDays[4], StringFormat=dd}"
+                                 FontSize="20"
+                                 BaselineAlignment="Center"/>
+                            </TextBlock>
+                        </Button>
+                        <Button Grid.Column="5"
+                            BorderBrush="White"
+                            BorderThickness="0,0,3,0"
+                            Command="{Binding NavigateToDayVMCommand}"
+                            CommandParameter="{Binding CurrentWeekDays[5]}">
+                            <TextBlock TextAlignment="Center"
+                                   FontWeight="Bold"
+                                   Foreground="White">
+                            <Run Text="SAT"
+                                 FontSize="25" />
+                            <LineBreak/>
+                            <Run Text="{Binding CurrentWeekDays[5], StringFormat=dd}"
+                                 FontSize="20"
+                                 BaselineAlignment="Center"/>
+                            </TextBlock>
+                        </Button>
+                        <Button Grid.Column="6"
+                            BorderBrush="White"
+                            BorderThickness="0,0,3,0"
+                            Command="{Binding NavigateToDayVMCommand}"
+                            CommandParameter="{Binding CurrentWeekDays[6]}">
+                            <TextBlock TextAlignment="Center"
+                                   FontWeight="Bold"
+                                   Foreground="White">
+                            <Run Text="SUN"
+                                 FontSize="25" />
+                            <LineBreak/>
+                            <Run Text="{Binding CurrentWeekDays[6], StringFormat=dd}"
+                                 FontSize="20"
+                                 BaselineAlignment="Center"/>
+                            </TextBlock>
+                        </Button>
+
+                        <Border Grid.Column="7" 
+                            Background="LightGray"/>
+
+                        <Border Grid.Row="1"
+                            Grid.ColumnSpan="8"
+                            BorderBrush="White"
+                            BorderThickness="3"/>
+
+                    </Grid>
+
+                    <ScrollViewer Name="TableListScrollViewer" 
+                          Grid.Row="1"
+                          HorizontalAlignment="Center"
+                          VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="135"/>
+                                <ColumnDefinition Width="135"/>
+                                <ColumnDefinition Width="135"/>
+                                <ColumnDefinition Width="135"/>
+                                <ColumnDefinition Width="135"/>
+                                <ColumnDefinition Width="135"/>
+                                <ColumnDefinition Width="135"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                BorderBrush="White"
+                                BorderThickness="0,0,3,0">
+                                <StackPanel MinHeight="200"
+                                            DataContext="{Binding ElementName=DefaultPlanView, Path=DataContext.TasksPanelVM}">
+                                    <ListBox
+                                         ItemsSource="{Binding ElementName=DefaultPlanView, Path=DataContext.MondayTasksList}"
+                                         Style="{StaticResource PlanViewTableListBoxStyle}"/>
+                                    <Button BorderBrush="White"
+                                        BorderThickness="0,0,0,3"
+                                        Background="Transparent"
+                                        Command="{Binding ShowTaskDialogCommand}"
+                                        CommandParameter="0">
+                                        <TextBlock Foreground="White"
+                                               Margin="5"
+                                               TextAlignment="Center">
+                                        <Run FontSize="20"
+                                             FontWeight="Bold"
+                                             Text="+"/>
+                                        <LineBreak/>
+                                        <Run FontSize="15" 
+                                             Text="new task"/>
+                                        </TextBlock>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1"
+                                BorderBrush="White"
+                                BorderThickness="0,0,3,0">
+                                <StackPanel MinHeight="200"
+                                            DataContext="{Binding ElementName=DefaultPlanView, Path=DataContext.TasksPanelVM}">
+                                    <ListBox
+                                         ItemsSource="{Binding ElementName=DefaultPlanView, Path=DataContext.TuesdayTasksList}"
+                                         Style="{StaticResource PlanViewTableListBoxStyle}"/>
+                                    <Button BorderBrush="White"
+                                        BorderThickness="0,0,0,3"
+                                        Background="Transparent"
+                                        Command="{Binding ShowTaskDialogCommand}"
+                                        CommandParameter="1">
+                                        <TextBlock Foreground="White"
+                                               Margin="5"
+                                               TextAlignment="Center">
+                                        <Run FontSize="20"
+                                             FontWeight="Bold"
+                                             Text="+"/>
+                                        <LineBreak/>
+                                        <Run FontSize="15" 
+                                             Text="new task"/>
+                                        </TextBlock>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="2"
+                                BorderBrush="White"
+                                BorderThickness="0,0,3,0">
+                                <StackPanel MinHeight="200"
+                                            DataContext="{Binding ElementName=DefaultPlanView, Path=DataContext.TasksPanelVM}">
+                                    <ListBox
+                                         ItemsSource="{Binding ElementName=DefaultPlanView, Path=DataContext.WednesdayTasksList}"
+                                         Style="{StaticResource PlanViewTableListBoxStyle}"/>
+                                    <Button BorderBrush="White"
+                                        BorderThickness="0,0,0,3"
+                                        Background="Transparent"
+                                        Command="{Binding ShowTaskDialogCommand}"
+                                        CommandParameter="2">
+                                        <TextBlock Foreground="White"
+                                               Margin="5"
+                                               TextAlignment="Center">
+                                        <Run FontSize="20"
+                                             FontWeight="Bold"
+                                             Text="+"/>
+                                        <LineBreak/>
+                                        <Run FontSize="15" 
+                                             Text="new task"/>
+                                        </TextBlock>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="3"
+                                BorderBrush="White"
+                                BorderThickness="0,0,3,0">
+                                <StackPanel MinHeight="200"
+                                            DataContext="{Binding ElementName=DefaultPlanView, Path=DataContext.TasksPanelVM}">
+                                    <ListBox
+                                         ItemsSource="{Binding ElementName=DefaultPlanView, Path=DataContext.ThursdayTasksList}"
+                                         Style="{StaticResource PlanViewTableListBoxStyle}"/>
+                                    <Button BorderBrush="White"
+                                        BorderThickness="0,0,0,3"
+                                        Background="Transparent"
+                                        Command="{Binding ShowTaskDialogCommand}"
+                                        CommandParameter="3">
+                                        <TextBlock Foreground="White"
+                                               Margin="5"
+                                               TextAlignment="Center">
+                                        <Run FontSize="20"
+                                             FontWeight="Bold"
+                                             Text="+"/>
+                                        <LineBreak/>
+                                        <Run FontSize="15" 
+                                             Text="new task"/>
+                                        </TextBlock>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="4"
+                                BorderBrush="White"
+                                BorderThickness="0,0,3,0">
+                                <StackPanel MinHeight="200"
+                                            DataContext="{Binding ElementName=DefaultPlanView, Path=DataContext.TasksPanelVM}">
+                                    <ListBox
+                                         ItemsSource="{Binding ElementName=DefaultPlanView, Path=DataContext.FridayTasksList}"
+                                         Style="{StaticResource PlanViewTableListBoxStyle}"/>
+                                    <Button BorderBrush="White"
+                                        BorderThickness="0,0,0,3"
+                                        Background="Transparent"
+                                        Command="{Binding ShowTaskDialogCommand}"
+                                        CommandParameter="4">
+                                        <TextBlock Foreground="White"
+                                               Margin="5"
+                                               TextAlignment="Center">
+                                        <Run FontSize="20"
+                                             FontWeight="Bold"
+                                             Text="+"/>
+                                        <LineBreak/>
+                                        <Run FontSize="15" 
+                                             Text="new task"/>
+                                        </TextBlock>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="5"
+                                BorderBrush="White"
+                                BorderThickness="0,0,3,0">
+                                <StackPanel MinHeight="200"
+                                            DataContext="{Binding ElementName=DefaultPlanView, Path=DataContext.TasksPanelVM}">
+                                    <ListBox
+                                         ItemsSource="{Binding ElementName=DefaultPlanView, Path=DataContext.SaturdayTasksList}"
+                                         Style="{StaticResource PlanViewTableListBoxStyle}"/>
+                                    <Button BorderBrush="White"
+                                        BorderThickness="0,0,0,3"
+                                        Background="Transparent"
+                                        Command="{Binding ShowTaskDialogCommand}"
+                                        CommandParameter="5">
+                                        <TextBlock Foreground="White"
+                                               Margin="5"
+                                               TextAlignment="Center">
+                                        <Run FontSize="20"
+                                             FontWeight="Bold"
+                                             Text="+"/>
+                                        <LineBreak/>
+                                        <Run FontSize="15" 
+                                             Text="new task"/>
+                                        </TextBlock>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="6"
+                                BorderBrush="White"
+                                BorderThickness="0,0,3,0">
+                                <StackPanel MinHeight="200"
+                                            DataContext="{Binding ElementName=DefaultPlanView, Path=DataContext.TasksPanelVM}">
+                                    <ListBox
+                                         ItemsSource="{Binding ElementName=DefaultPlanView, Path=DataContext.SundayTasksList}"
+                                         Style="{StaticResource PlanViewTableListBoxStyle}"/>
+                                    <Button BorderBrush="White"
+                                        BorderThickness="0,0,0,3"
+                                        Background="Transparent"
+                                        Command="{Binding ShowTaskDialogCommand}"
+                                        CommandParameter="6">
+                                        <TextBlock Foreground="White"
+                                               Margin="5"
+                                               TextAlignment="Center">
+                                        <Run FontSize="20"
+                                             FontWeight="Bold"
+                                             Text="+"/>
+                                        <LineBreak/>
+                                        <Run FontSize="15" 
+                                             Text="new task"/>
+                                        </TextBlock>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+
+            </Border>
+        </Grid>
+
+        <views:TaskView DataContext="{Binding ElementName=DefaultPlanView,
+                                              Path=DataContext.TasksPanelVM}"
+                        Panel.ZIndex="2"
+                        Visibility="{Binding Path=ShowTaskDialog, 
+                                     Converter={StaticResource BoolToVisConverter}}"/>
+        <views:ConfirmationDialogView DataContext="{Binding ElementName=DefaultPlanView,
+                                              Path=DataContext.TasksPanelVM}"
+                                      Panel.ZIndex="2"
+                                      Visibility="{Binding Path=ShowConfirmationDialog, 
+                                                   Converter={StaticResource BoolToVisConverter}}"
+                                      Tag="Are you sure you want to delete?"/>
+        <views:MessageBoxView DataContext="{Binding ElementName=DefaultPlanView,
+                                              Path=DataContext.TasksPanelVM}"
+                              Panel.ZIndex="2"
+                              Visibility="{Binding Path=ShowMessageBox, 
+                                                   Converter={StaticResource BoolToVisConverter}}"
+                              Tag="Succeed! Task lists will be updated."/>
+
+        <Grid d:Visibility="Collapsed"
+              DataContext="{Binding ElementName=DefaultPlanView,
+                                    Path=DataContext.TasksPanelVM}"
+              Visibility="Collapsed"
+              Panel.ZIndex="1"
+              Background="Black"
+              Opacity="0.5">
+            <Button Background="Transparent">
+                <Behaviors:Interaction.Triggers>
+                    <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <Behaviors:Interaction.Behaviors>
+                            <Behaviors:ConditionBehavior>
+                                <Behaviors:ConditionalExpression>
+                                    <Behaviors:ComparisonCondition LeftOperand="{Binding ShowTaskDialog}"
+                                                                   RightOperand="True"/>
+                                </Behaviors:ConditionalExpression>
+                            </Behaviors:ConditionBehavior>
+                        </Behaviors:Interaction.Behaviors>
+
+                        <Behaviors:InvokeCommandAction Command="{Binding CancelTaskDialogCommand}"/>
+                    </Behaviors:EventTrigger>
+                    <Behaviors:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <Behaviors:Interaction.Behaviors>
+                            <Behaviors:ConditionBehavior>
+                                <Behaviors:ConditionalExpression>
+                                    <Behaviors:ComparisonCondition LeftOperand="{Binding ShowConfirmationDialog}"
+                                                                   RightOperand="True"/>
+                                </Behaviors:ConditionalExpression>
+                            </Behaviors:ConditionBehavior>
+                        </Behaviors:Interaction.Behaviors>
+
+                        <Behaviors:InvokeCommandAction Command="{Binding ConfirmationDialogNoCommand}"/>
+                    </Behaviors:EventTrigger>
+                </Behaviors:Interaction.Triggers>
+            </Button>
+            <Behaviors:Interaction.Triggers>
+                <Behaviors:DataTrigger Binding="{Binding ShowTaskDialog}" Value="True">
+                    <Behaviors:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                </Behaviors:DataTrigger>
+                <Behaviors:DataTrigger Binding="{Binding ShowTaskDialog}" Value="False">
+                    <Behaviors:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                </Behaviors:DataTrigger>
+                <Behaviors:DataTrigger Binding="{Binding ShowConfirmationDialog}" Value="True">
+                    <Behaviors:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                </Behaviors:DataTrigger>
+                <Behaviors:DataTrigger Binding="{Binding ShowConfirmationDialog}" Value="False">
+                    <Behaviors:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                </Behaviors:DataTrigger>
+            </Behaviors:Interaction.Triggers>
+        </Grid>
+
+    </Grid>
+</UserControl>

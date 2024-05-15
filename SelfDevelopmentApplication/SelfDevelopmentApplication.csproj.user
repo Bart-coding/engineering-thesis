@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\AboutAppView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ConfirmationDialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\DayView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\MessageBoxView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\MoodStatusPanelView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\TasksCategoriesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\CategoryNameView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\NoteView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\NotesCategoriesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\NotesListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\NotesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PlanView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\TasksManagementPanelView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\TaskView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\FilteringTextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\MenuButtonStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\NotesDatePickerStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\PlanViewTableListBoxStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\PlanViewTableLabelStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\TasksListDataGridStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AboutAppView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ConfirmationDialogView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DayView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MessageBoxView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MoodStatusPanelView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\TasksCategoriesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CategoryNameView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\NoteView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\NotesCategoriesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\NotesListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\NotesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PlanView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\TasksManagementPanelView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\TaskView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

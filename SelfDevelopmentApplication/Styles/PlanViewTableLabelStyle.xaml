@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <Style x:Key="PlanViewTableLabelStyle" TargetType="{x:Type Button}">
+        <Style.Setters>
+            <Setter Property="Background" Value="#142439"/>
+        </Style.Setters>
+        <Style.Triggers>
+            <Trigger Property="Grid.Column" Value="5">
+                <Setter Property="Background" Value="#482439"/>
+            </Trigger>
+            <Trigger Property="Grid.Column" Value="6">
+                <Setter Property="Background" Value="#482439"/>
+            </Trigger>
+            <Trigger Property="CommandParameter" Value="{x:Static system:DateTime.Today}">
+                <Setter Property="Background" Value="#144839"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

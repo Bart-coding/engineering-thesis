@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="FilteringTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Name="InternalTBox"
+                                     Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Foreground="White"
+                                     FontSize="20"
+                                     FontWeight="Bold"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     MinWidth="60"
+                                     Panel.ZIndex="1"/>
+                            <TextBlock Name="InternalTBlock"
+                                       Text="{TemplateBinding Tag}"
+                                       Foreground="White"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Background="Transparent"
+                                       Opacity="0.3"
+                                       Visibility="Collapsed"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger SourceName="InternalTBox" Property="Text" Value="">
+                                <Setter TargetName="InternalTBlock" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>

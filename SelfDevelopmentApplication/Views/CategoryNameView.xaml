@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="SelfDevelopmentApplication.Views.CategoryNameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             Height="208"
+             Width="300">
+    <Border CornerRadius="15" 
+            Background="#313e4e"
+            BorderBrush="Black"
+            BorderThickness="1"
+            Padding="20">
+
+            <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+
+                <TextBlock Text="Category name:"
+                               Foreground="White"
+                               FontSize="30"
+                               FontWeight="Bold"
+                               Margin="0,0,0,16"/>
+
+            <TextBlock Text="(This name is taken!)"
+                       Margin="0,-15,0,0"
+                       FontSize="15"
+                       FontWeight="Bold"
+                       Foreground="Gray"
+                       Opacity="0.8"
+                       Padding="3"
+                       Panel.ZIndex="2"
+                       HorizontalAlignment="Center"
+                       Visibility="{Binding IsCategoryNameTaken, Converter={StaticResource BoolToVisConverter}}"/>
+            <TextBox Name="CategoryNameTBox" 
+                     Text="{Binding CategoryNameInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     MaxLength="30"
+                     Margin="0,0,0,15"
+                     FontSize="20"
+                     Background="#516580"
+                     Foreground="White"
+                     Padding="3"
+                     Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=StackPanel}}"/>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+
+                    <Border CornerRadius="15"
+                            Margin="10,0,10,0"
+                            Padding="10"
+                            Background="White">
+                        <Button Content="OK"
+                                FontSize="15"
+                                FontWeight="Bold"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding SubmitDialogCommand}"
+                                CommandParameter="{Binding ElementName=CategoryNameTBox, Path=Text}"/>
+                    </Border>
+
+                    <Border CornerRadius="15"
+                            Margin="10,0,10,0"
+                            Padding="10"
+                            Background="White">
+                        <Button Content="RETURN"
+                                FontSize="15"
+                                FontWeight="Bold"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding CancelDialogCommand}"/>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+    </Border>
+</UserControl>
